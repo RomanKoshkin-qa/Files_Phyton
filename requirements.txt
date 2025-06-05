@@ -1,0 +1,4 @@
+selene
+requests
+PyPDF2~=3.0.1
+pandas~=2.3.0
