@@ -5,19 +5,10 @@ from io import TextIOWrapper
 import PyPDF2
 import pandas as pd
 
-
-# создаём ZIP-архив в режиме записи
-def test_create_arhive():
-    with zipfile.ZipFile('my_archive.zip', 'w') as zipf:
-    # Добавляем каждый файл по отдельности
-        zipf.write('One.csv')
-        zipf.write('Two.pdf')
-        zipf.write('Three.xlsx')
-    with zipfile.ZipFile('my_archive.zip', 'r') as zipf:
-        print(zipf.namelist())
+from script_os import ZIP_DIR
 
 def test_csv_one():
-    with zipfile.ZipFile('C:/Users/user/Desktop/Files_Phyton/my_archive.zip') as zip_file: # открываем архив
+    with zipfile.ZipFile(ZIP_DIR) as zip_file: # открываем архив
         with zip_file.open('One.csv') as csv_file: # открываем файл в архиве
             csvreader = list(csv.reader(TextIOWrapper(csv_file, 'utf-8-sig'))) # читаем содержимое файла и преобразуем его в список и декодируем его если в файле есть символы не из английского алфавита
             second_row = csvreader[0] # получаем первую строку
@@ -27,7 +18,7 @@ def test_csv_one():
             assert second_row[2] == 'Moscow' # проверка значения элемента во втором столбце второй строки
 
 def test_xlsx_three():
-    with zipfile.ZipFile('C:/Users/user/Desktop/Files_Phyton/my_archive.zip') as zip_file:  # открываем архив
+    with zipfile.ZipFile(ZIP_DIR) as zip_file:  # открываем архив
 
         with zip_file.open('Three.xlsx') as xlsx_file:
 
@@ -40,7 +31,7 @@ def test_xlsx_three():
 
 
 def test_pdf_two():
-    with zipfile.ZipFile('C:/Users/user/Desktop/Files_Phyton/my_archive.zip') as zip_file: # открываем архив
+    with zipfile.ZipFile(ZIP_DIR) as zip_file: # открываем архив
 
         with zip_file.open('Two.pdf') as pdf_file: # Открываем PDF-файл из архива
             pdf_reader = PyPDF2.PdfReader(BytesIO(pdf_file.read())) # Загружаем PDF в байтах в PyPDF2
@@ -51,4 +42,4 @@ def test_pdf_two():
     assert "Moscow" in page_text
 
 
-# путь C:/Users/user/Desktop/Files_Phyton
+
